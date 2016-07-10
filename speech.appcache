@@ -2,7 +2,7 @@ CACHE MANIFEST
 
 CACHE:
 processing.js
-pure_processing.pde
+pure_processing/pure_processing.pde
 
 
 # Fallback content
