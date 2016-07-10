@@ -1,0 +1,14 @@
+CACHE MANIFEST
+
+CACHE:
+processing.js
+pure_processing.pde
+
+
+# Fallback content
+FALLBACK:
+
+# Use from network if available
+NETWORK:
+
+
