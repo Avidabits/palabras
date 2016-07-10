@@ -6,11 +6,11 @@
 
 // clase y variable de configuracion
 class Configura{
-  Boolean letra_menguante=false;
+  Boolean letra_menguante=true;
   int retardo=50;
   color color_fondo=0;
-  color color_letra=color(255, 255, 255);
-  int num_textos_minimo=20;
+  color color_letra=color(255, 230, 230);
+  int num_textos_minimo=1;º
   
 } 
 

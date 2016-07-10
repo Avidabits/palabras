@@ -4,6 +4,7 @@ Url de pruebas:  http://rawgit.com/Avidabits/palabras/master/speech.html
 
 Url de producción:
    https://cdn.rawgit.com/Avidabits/palabras/master/speech.html
+   http://tinyurl.com/instante-palabras
 
 
 Descripción de la obra:
