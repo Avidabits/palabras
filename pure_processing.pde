@@ -6,12 +6,15 @@
 
 // clase y variable de configuracion
 class Configura{
-  Boolean letra_menguante=true;
+  Boolean letra_menguante=true; //poner a false si va demasiado lento.
   int retardo=50;
-  color color_fondo=0;
-  color color_letra=color(255, 230, 230);
-  int num_textos_minimo=1;
-  
+  color color_fondo=0; //negro
+  color color_letra=color(255, 255, 255);// muy claro
+  int num_textos_minimo=5;
+  float factor_anchura=0.6; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
+  // los textos puedan ponerse en una franja vertical y ocupar menos espacio de galeria.
+  // cuando calculemos el warping del texto o el ancho de los objetos a pintar, multiplicaremos with por el factor de anchira
+  float width() {return (float)width*factor_anchura;}
 } 
 
 Configura configuracion=new Configura();
@@ -26,53 +29,7 @@ Boolean nuevo_final=false; // para saber cuando hay un reconocimiento final nuev
 // una poesia secreta 
 ArrayList<String> poesia;
 
-void creaPoesia()
-{
-  poesia = new ArrayList<String>();
-  /*
-  poesia.add("Cerrar podrá mis ojos la postrera");
-  poesia.add("sombra, que me llevare el blanco día,");
-  poesia.add("y podrá desatar esta alma mía");
-  poesia.add("hora, a su afán ansioso linsojera;");
-  poesia.add("mas no de esotra parte en la ribera");
-  poesia.add("dejará la memoria en donde ardía;");
-  poesia.add("nadar sabe mi llama la agua fría,");
-  poesia.add("y perder el respeto a ley severa;");
-  poesia.add("Alma a quien todo un Dios prisión ha sido,");
-  poesia.add("venas que humor a tanto fuego han dado,");
-  poesia.add("médulas que han gloriosamente ardido,");
-  poesia.add("su cuerpo dejarán, no su cuidado;");
-  poesia.add("serán ceniza, mas tendrán sentido.");
-  poesia.add("Polvo serán, mas polvo enamorado.");
-  
-  */
-  poesia.add("¿qué significa?");
-  poesia.add("cómo?");
-  poesia.add("qué bonito");
-  poesia.add("no entiendo nada");
-  poesia.add("pues a mi no me gusta");
-  poesia.add("esta noche no he podido dormir");
-  poesia.add("te espero en casa");
-  poesia.add("¿cuanto cuesta?");
-  poesia.add("por qué");
-  poesia.add("siempre te quedas ahí pasada");
-  poesia.add("pues sigo sin entender nada");
-  poesia.add("cuanto más los miro");
-  poesia.add("mirar allí");
-  poesia.add("no la encuentro");
-  poesia.add("dónde está la tuyo");
-  poesia.add("siempre pienso en eso");
-  poesia.add("a mi no me mires");
-  poesia.add("ya entiendo lo que quiere decir");
-  poesia.add("pues a mi plin");
-  
-}
-
-
-
-
 // Global variables
-
 int X, Y; //posicion circulo
 float size_letra=32;
 
@@ -252,5 +209,46 @@ void drawAxis() {
   line(0, 0, 20, 0); //eje x rojo
   stroke(0, 255, 0); // eje y verde
   line(0, 0, 0, 20);
+}
+
+void creaPoesia()
+{
+  poesia = new ArrayList<String>();
+
+  poesia.add("¿qué significa?");
+  poesia.add("cómo?");
+  poesia.add("qué bonito");
+  poesia.add("no entiendo nada");
+  poesia.add("pues a mi no me gusta");
+  poesia.add("esta noche no he podido dormir");
+  poesia.add("te espero en casa");
+  poesia.add("¿cuanto cuesta?");
+  poesia.add("por qué");
+  poesia.add("siempre te quedas ahí pasada");
+  poesia.add("pues sigo sin entender nada");
+  poesia.add("cuanto más los miro");
+  poesia.add("mirar allí");
+  poesia.add("no la encuentro");
+  poesia.add("dónde está la tuyo");
+  poesia.add("siempre pienso en eso");
+  poesia.add("a mi no me mires");
+  poesia.add("ya entiendo lo que quiere decir");
+  poesia.add("pues a mi plin");
+  
+}
+
+void pintaFluorescente(int altura)
+{
+   // pintar luces vibrantes y algo pulsantes en la parte baja del viewport
+   float r=red(configuracion.color_letra);
+   float g=green(configuracion.color_letra);
+   float b=blue(configuracion.color_letra);
+    
+   for (int i=0; i<altura; i++)  
+   {
+     float decremento=sin(2*PI*i/(4*altura));
+     stroke(color(r-r*decremento, g-g*decremento, b-b*decremento));
+     line(0, height-i, configuracion.width(), height-i);
+   }
 }
 
