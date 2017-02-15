@@ -71,8 +71,12 @@ class trackTexto {
     
     //m_size_letra=map(y, y_inicial, y_final, m_size_letra_inicial, m_size_letra_inicial/2);
     // para sistemas operativos lento no cambio el tamaño de la letra
-    
+     if (configuracion.letra_menguante) m_size_letra=map(y, y_inicial, y_final, m_size_letra_inicial, m_size_letra_inicial/2);
+    // para sistemas operativos lento no cambio el tamaño de la letra
+
   }; 
+  
+  
   void pintate()
   {
 
