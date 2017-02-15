@@ -14,7 +14,7 @@ class Configura{
   float factor_anchura=0.6; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
   // los textos puedan ponerse en una franja vertical y ocupar menos espacio de galeria.
   // cuando calculemos el warping del texto o el ancho de los objetos a pintar, multiplicaremos with por el factor de anchira
-  float width() {return (float)width*factor_anchura;}
+  int width() {return (int)(factor_anchura*(float)width); }
 } 
 
 Configura configuracion=new Configura();
@@ -81,7 +81,7 @@ class trackTexto {
  
     if (configuracion.letra_menguante) textFont(m_fuente, m_size_letra);
     int distanciaBorde=x;
-    if (x>configuracion.width()/2) distanciaBorde=(int)configuracion.width()-x;
+    if (x>configuracion.width()/2) distanciaBorde=configuracion.width()-x;
     text(texto,x,y+m_size_letra/2, distanciaBorde, m_size_letra*2); //escibir el texto en pantalla    
     println("TrackTexto.pintate");
 
@@ -110,7 +110,7 @@ void setup(){
   
   fill(configuracion.color_letra);     // relleno dibujo blanco, letra
   frameRate( 16 ); // numero de veces que llamamos a draw por segundo. 
-  X = (int)configuracion.width()/2; //empieza en el centro. aqui
+  X = configuracion.width()/2; //empieza en el centro. aqui
   Y = height/2;//empieza en el centro
   
   
@@ -221,7 +221,7 @@ void creaPoesia()
 {
   poesia = new ArrayList<String>();
 
-  poesia.add("¿qué significa? ¿qué?"); //pendiente , quitar texto testing
+  poesia.add("¿qué significa?"); //pendiente , quitar texto testing
   poesia.add("cómo?");
   poesia.add("qué bonito");
   poesia.add("no entiendo nada");
