@@ -78,9 +78,16 @@ class trackTexto {
   void pintate()
   {
 
-    //pendiente
+    //pendiente eliminar el comentario 
+    /*if (configuracion.letra_menguante) textFont(m_fuente, m_size_letra);
+     text(texto,x,y);
+    */
+    
+
     if (configuracion.letra_menguante) textFont(m_fuente, m_size_letra);
-    text(texto,x,y);
+    int distanciaBorde=x;
+    if (x>configuracion.width()/2) distanciaBorde=(int)configuracion.width()-x;
+    text(texto,x,y+m_size_letra/2, distanciaBorde, m_size_letra*2); //escibir el texto en pantalla    
 
 
   };
@@ -106,11 +113,10 @@ void setup(){
   textos_finales = new ArrayList<trackTexto>();  // Create an empty ArrayList
   on_nueva_size(1280, 720);
   
-    fill(configuracion.color_letra);     // relleno dibujo blanco, letra
-    frameRate( 16 ); // numero de veces que llamamos a draw por segundo. 
-    //strokeWeight( 7 ); // PENDIENTE ELIMINAR
-    X = width/2; //empieza en el centro
-    Y = height/2;//empieza en el centro
+  fill(configuracion.color_letra);     // relleno dibujo blanco, letra
+  frameRate( 16 ); // numero de veces que llamamos a draw por segundo. 
+  X = width/2; //empieza en el centro
+  Y = height/2;//empieza en el centro
   
   
   // printArray(PFont.list());// mirando esas fuentes
@@ -221,7 +227,7 @@ void creaPoesia()
 {
   poesia = new ArrayList<String>();
 
-  poesia.add("¿qué significa? ¿ESTE FLUORESCENTE?"); //pendiente , quitar texto testing
+  poesia.add("¿qué significa? ¿ESTE FLUORESCENTE no sale?"); //pendiente , quitar texto testing
   poesia.add("cómo?");
   poesia.add("qué bonito");
   poesia.add("no entiendo nada");
