@@ -14,7 +14,8 @@ class Configura{
   float factor_anchura=0.6; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
   // los textos puedan ponerse en una franja vertical y ocupar menos espacio de galeria.
   // cuando calculemos el warping del texto o el ancho de los objetos a pintar, multiplicaremos with por el factor de anchira
-  int width() {return (int)(factor_anchura*(float)width); }
+  //int width() {return (int)(factor_anchura*(float)width); }
+  int width() {return width;}// PENDIENTE RECUPERAR METODO ANTERIOR
 } 
 
 Configura configuracion=new Configura();
@@ -24,7 +25,7 @@ Configura configuracion=new Configura();
 // con ellas y con la funcion copia_variables_script hare que puedan funcionar 
 // este pde de forma independiente.
 String texto_final = "¿que si quieres hablar conmigo?"; 
-String texto_intermedio ="¿quieres hablar conmigo?"; 
+String texto_intermedio ="¿quieres hablar conmigo? ¿?"; 
 Boolean nuevo_final=false; // para saber cuando hay un reconocimiento final nuevo
 // una poesia secreta 
 ArrayList<String> poesia;
@@ -83,7 +84,7 @@ class trackTexto {
     int distanciaBorde=x;
     if (x>configuracion.width()/2) distanciaBorde=configuracion.width()-x;
     text(texto,x,y+m_size_letra/2, distanciaBorde, m_size_letra*2); //escibir el texto en pantalla    
-    println("TrackTexto.pintate");
+    
 
   };
   
@@ -110,7 +111,7 @@ void setup(){
   
   fill(configuracion.color_letra);     // relleno dibujo blanco, letra
   frameRate( 16 ); // numero de veces que llamamos a draw por segundo. 
-  X = configuracion.width()/2; //empieza en el centro. aqui
+  X = configuracion.width()/2; //empieza en el centro. 
   Y = height/2;//empieza en el centro
   
   
@@ -132,8 +133,12 @@ void draw()
   fill(configuracion.color_letra);
 
   size_letra=size_letra+sin(frameCount/6);
-  textFont(fuente, size_letra); 
-  text(texto_intermedio,X,Y+size_letra/2); //escibir el texto en pantalla
+  textFont(fuente, size_letra);
+  int distanciaBorde=X;
+  if (X>configuracion.width()/2) distanciaBorde=configuracion.width()-X;
+  text(texto_intermedio,X,Y+size_letra/2, distanciaBorde, size_letra*2); //escibir el texto en pantalla
+
+  //text(texto_intermedio,X,Y+size_letra/2); //PENDIENTE, QUITAR el texto en pantalla
   textFont(fuente); //restaura el tamaño de letra original
   
   if (nuevo_final) 
