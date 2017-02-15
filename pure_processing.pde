@@ -78,12 +78,7 @@ class trackTexto {
   void pintate()
   {
 
-    //pendiente eliminar el comentario 
-    /*if (configuracion.letra_menguante) textFont(m_fuente, m_size_letra);
-     text(texto,x,y);
-    */
-    
-
+ 
     if (configuracion.letra_menguante) textFont(m_fuente, m_size_letra);
     int distanciaBorde=x;
     if (x>configuracion.width()/2) distanciaBorde=(int)configuracion.width()-x;
@@ -115,7 +110,7 @@ void setup(){
   
   fill(configuracion.color_letra);     // relleno dibujo blanco, letra
   frameRate( 16 ); // numero de veces que llamamos a draw por segundo. 
-  X = width/2; //empieza en el centro
+  X = (int)configuracion.width()/2; //empieza en el centro
   Y = height/2;//empieza en el centro
   
   
@@ -134,12 +129,15 @@ void draw()
 { // PENDIENTE CAMBIAR
 
   background( configuracion.color_fondo );
-  fill(configuracion.color_letra);//  pendiente quitar
+  //fill(configuracion.color_letra);//  pendiente quitar
   pintaFluorescente(height/2); // PENDIENTE es un decimo pero para entender que pasa
 
   size_letra=size_letra+sin(frameCount/6);
   textFont(fuente, size_letra); 
-  text(texto_intermedio,X,Y+size_letra/2); //escibir el texto en pantalla
+  int distanciaBorde=X;
+  if (X>configuracion.width()/2) distanciaBorde=(int)configuracion.width()-X;
+  text(texto_intermedio,X,Y+size_letra/2, distanciaBorde, size_letra*2); //escibir el texto en pantalla
+  ///////////////////////////// 
   textFont(fuente); //restaura el tamaño de letra original
   
   if (nuevo_final) 
@@ -149,7 +147,7 @@ void draw()
     // hacer que todos los textos avancen
 
     //nueva posicion para los nuevos textos intermedios que lleguen
-    X=(int)random(size_letra*5, width-size_letra*5);
+    X=(int)random(size_letra*5, configuracion.width()-size_letra*5);
     Y=(int)random(size_letra*2, height/2); //para que por lo menos tengan que caer durante la mitad de la pantalla
     nuevo_final=false;  
   }
