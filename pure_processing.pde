@@ -11,7 +11,7 @@ class Configura{
   color color_fondo=0; //negro
   color color_letra=color(255, 255, 255);// muy claro
   int num_textos_minimo=5;
-  float factor_anchura=0.25; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
+  float factor_anchura=1.0; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
   // los textos puedan ponerse en una franja vertical y ocupar menos espacio de galeria.
   // cuando calculemos el warping del texto o el ancho de los objetos a pintar, multiplicaremos with por el factor de anchira
   int width() {return (int)(factor_anchura*(float)width); }
@@ -83,7 +83,7 @@ class trackTexto {
     if (configuracion.letra_menguante) textFont(m_fuente, m_size_letra);
     int distanciaBorde=x;
     if (x>configuracion.width()/2) distanciaBorde=configuracion.width()-x;
-    text(texto,x,y+m_size_letra/2, distanciaBorde, m_size_letra*2); //escibir el texto en pantalla    
+    text(texto,x-distanciaBorde,y-m_size_letra, distanciaBorde*2, m_size_letra*4); //escibir el texto en pantalla    
     
   };
   
@@ -119,7 +119,6 @@ void setup(){
   textFont(fuente);  
   textAlign(CENTER);
   textMode(SCREEN);
-  rectMode(RADIUS); // Para indicar el rectangulo de texto entre  
  
   creaPoesia();
 }
@@ -134,9 +133,11 @@ void draw()
 
   size_letra=size_letra+sin(frameCount/6);
   textFont(fuente, size_letra);
+  
+  // pintamos el texto en modo corner, ancho alto. 
   int distanciaBorde=X;
   if (X>configuracion.width()/2) distanciaBorde=configuracion.width()-X;
-  text(texto_intermedio,X,Y+size_letra/2, distanciaBorde, size_letra*2); //escibir el texto en pantalla
+  text(texto_intermedio,X-distanciaBorde,Y-size_letra, distanciaBorde*2, size_letra*4); //escibir el texto en pantalla
 
   //text(texto_intermedio,X,Y+size_letra/2); //PENDIENTE, QUITAR el texto en pantalla
   textFont(fuente); //restaura el tamaño de letra original
