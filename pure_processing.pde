@@ -14,8 +14,8 @@ class Configura{
   float factor_anchura=1.0; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
   // los textos puedan ponerse en una franja vertical y ocupar menos espacio de galeria.
   // cuando calculemos el warping del texto o el ancho de los objetos a pintar, multiplicaremos with por el factor de anchira
-  int width() {return (int)(factor_anchura*(float)width); }
-  //int width() {return width;}// PENDIENTE RECUPERAR METODO ANTERIOR
+  //int width() {return (int)(factor_anchura*(float)width); }
+  int width() {return width;}// PENDIENTE RECUPERAR METODO ANTERIOR
 } 
 
 Configura configuracion=new Configura();
@@ -84,7 +84,8 @@ class trackTexto {
     int distanciaBorde=x;
     if (x>configuracion.width()/2) distanciaBorde=configuracion.width()-x;
     text(texto,x-distanciaBorde,y-m_size_letra, distanciaBorde*2, m_size_letra*4); //escibir el texto en pantalla    
-    
+    noFill();
+    rect(x-distanciaBorde,y-m_size_letra, distanciaBorde*2, m_size_letra*4);
   };
   
   Boolean ha_llegado() {
@@ -109,6 +110,7 @@ void setup(){
   on_nueva_size(1280, 720);
   
   fill(configuracion.color_letra);     // relleno dibujo blanco, letra
+  stroke(configuracion.color_letra);
   frameRate( 16 ); // numero de veces que llamamos a draw por segundo. 
   X = configuracion.width()/2; //empieza en el centro. 
   Y = height/2;//empieza en el centro
@@ -117,7 +119,7 @@ void setup(){
   // printArray(PFont.list());// mirando esas fuentes
   fuente= createFont("Verdana", size_letra);
   textFont(fuente);  
-  textAlign(CENTER);
+  textAlign(CENTER);//importante para escribir textos en modo (x,y, ancho, alto);
   textMode(SCREEN);
  
   creaPoesia();
@@ -138,6 +140,8 @@ void draw()
   int distanciaBorde=X;
   if (X>configuracion.width()/2) distanciaBorde=configuracion.width()-X;
   text(texto_intermedio,X-distanciaBorde,Y-size_letra, distanciaBorde*2, size_letra*4); //escibir el texto en pantalla
+  noFill();
+  rect(X-distanciaBorde,Y-size_letra, distanciaBorde*2, size_letra*4);
 
   //text(texto_intermedio,X,Y+size_letra/2); //PENDIENTE, QUITAR el texto en pantalla
   textFont(fuente); //restaura el tamaño de letra original
