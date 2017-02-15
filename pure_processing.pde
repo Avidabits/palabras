@@ -37,6 +37,7 @@ float size_letra=32;
 void pinta_texto(String texto, int centroX, int centroY, int sizeLetra)
 {
    // helper para homogeneizar el modo de pintar texto porque processinfg JS no acepta determimados modos de rectangulo
+   print ("centroX="); println(centroX);
   int distanciaBorde=centroX;
   if (centroX>configuracion.width()/2) distanciaBorde=configuracion.width()-centroX;
   text(texto,centroX-distanciaBorde,centroY-sizeLetra, distanciaBorde*2, sizeLetra*4); //escibir el texto en pantalla    
