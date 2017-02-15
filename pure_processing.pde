@@ -42,7 +42,7 @@ void pinta_texto(String texto, int centroX, int centroY, int sizeLetra)
   text(texto,centroX-distanciaBorde,centroY-sizeLetra, distanciaBorde*2, sizeLetra*4); //escibir el texto en pantalla    
   noFill();
   rect(centroX-distanciaBorde,centroY-sizeLetra, distanciaBorde*2, sizeLetra*4);
-  println(texto, centroX-distanciaBorde,centroY-sizeLetra, distanciaBorde*2, sizeLetra*4);
+  print(texto);print(" ancho");println(distanciaBorde*2);
   
 };
 
