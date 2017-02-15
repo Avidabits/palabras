@@ -106,21 +106,19 @@ void setup(){
   textos_finales = new ArrayList<trackTexto>();  // Create an empty ArrayList
   on_nueva_size(1280, 720);
   
-   fill(configuracion.color_letra);     // relleno dibujo blanco, letra
-  frameRate( 16 ); // numero de veces que llamamos a draw por segundo. 
-  strokeWeight( 7 ); // PENDIENTE ELIMINAR
-  frameRate( 24 ); // 
-  X = width/2; //empieza en el centro
-  Y = height/2;//empieza en el centro
+    fill(configuracion.color_letra);     // relleno dibujo blanco, letra
+    frameRate( 16 ); // numero de veces que llamamos a draw por segundo. 
+    //strokeWeight( 7 ); // PENDIENTE ELIMINAR
+    X = width/2; //empieza en el centro
+    Y = height/2;//empieza en el centro
   
   
   // printArray(PFont.list());// mirando esas fuentes
   fuente= createFont("Verdana", size_letra);
   textFont(fuente);  
   textAlign(CENTER);
-  //rectMode(RADIUS); // Para indicar el rectangulo de texto entre  
-  // PENDIENTE PONER
-  
+  rectMode(RADIUS); // Para indicar el rectangulo de texto entre  
+ 
   creaPoesia();
 }
 
