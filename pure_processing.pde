@@ -126,11 +126,10 @@ void setup(){
 
 // Main draw loop
 void draw()
-{ // PENDIENTE CAMBIAR
+{
 
   background( configuracion.color_fondo );
-  //fill(configuracion.color_letra);//  pendiente quitar
-  pintaFluorescente(height/2); // PENDIENTE es un decimo pero para entender que pasa
+  fill(configuracion.color_letra);
 
   size_letra=size_letra+sin(frameCount/6);
   textFont(fuente, size_letra); 
@@ -222,7 +221,7 @@ void creaPoesia()
 {
   poesia = new ArrayList<String>();
 
-  poesia.add("¿qué significa? ¿ESTE FLUORESCENTE sin salir aun?"); //pendiente , quitar texto testing
+  poesia.add("¿qué significa? ¿?"); //pendiente , quitar texto testing
   poesia.add("cómo?");
   poesia.add("qué bonito");
   poesia.add("no entiendo nada");
