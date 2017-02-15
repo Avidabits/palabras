@@ -34,6 +34,17 @@ ArrayList<String> poesia;
 int X, Y; //posicion circulo
 float size_letra=32;
 
+void pinta_texto(String texto, int centroX, int centroY, int sizeLetra)
+{
+   // helper para homogeneizar el modo de pintar texto porque processinfg JS no acepta determimados modos de rectangulo
+  int distanciaBorde=centroX;
+  if (centroX>configuracion.width()/2) distanciaBorde=configuracion.width()-centroX;
+  text(texto,centroX-distanciaBorde,centroY-sizeLetra, distanciaBorde*2, sizeLetra*4); //escibir el texto en pantalla    
+  noFill();
+  rect(centroX-distanciaBorde,centroY-sizeLetra, distanciaBorde*2, sizeLetra*4);
+  println(texto, centroX-distanciaBorde,centroY-sizeLetra, distanciaBorde*2, sizeLetra*4);
+  
+};
 
 class trackTexto {
   String texto;
@@ -78,14 +89,10 @@ class trackTexto {
   
   void pintate()
   {
-
  
     if (configuracion.letra_menguante) textFont(m_fuente, m_size_letra);
-    int distanciaBorde=x;
-    if (x>configuracion.width()/2) distanciaBorde=configuracion.width()-x;
-    text(texto,x-distanciaBorde,y-m_size_letra, distanciaBorde*2, m_size_letra*4); //escibir el texto en pantalla    
-    noFill();
-    rect(x-distanciaBorde,y-m_size_letra, distanciaBorde*2, m_size_letra*4);
+    pinta_texto(texto, x, y, (int)m_size_letra);
+
   };
   
   Boolean ha_llegado() {
@@ -95,7 +102,7 @@ class trackTexto {
 
 }; 
   
-}; //class tractTexto
+}; //class tracktTexto
 
 ArrayList<trackTexto> textos_finales;
 
@@ -137,13 +144,8 @@ void draw()
   textFont(fuente, size_letra);
   
   // pintamos el texto en modo corner, ancho alto. 
-  int distanciaBorde=X;
-  if (X>configuracion.width()/2) distanciaBorde=configuracion.width()-X;
-  text(texto_intermedio,X-distanciaBorde,Y-size_letra, distanciaBorde*2, size_letra*4); //escibir el texto en pantalla
-  noFill();
-  rect(X-distanciaBorde,Y-size_letra, distanciaBorde*2, size_letra*4);
+  pinta_texto(texto_intermedio, X, Y, (int)size_letra);
 
-  //text(texto_intermedio,X,Y+size_letra/2); //PENDIENTE, QUITAR el texto en pantalla
   textFont(fuente); //restaura el tamaño de letra original
   
   if (nuevo_final) 
