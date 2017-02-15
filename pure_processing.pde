@@ -11,7 +11,10 @@ class Configura{
   color color_fondo=0; //negro
   color color_letra=color(255, 255, 255);// muy claro
   int num_textos_minimo=5;
-  
+  float factor_anchura=0.5; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
+  // los textos puedan ponerse en una franja vertical y ocupar menos espacio de galeria.
+  // cuando calculemos el warping del texto o el ancho de los objetos a pintar, multiplicaremos with por el factor de anchira
+  float width() {return (float)width*factor_anchura;}
 } 
 
 Configura configuracion=new Configura();
@@ -28,7 +31,7 @@ ArrayList<String> poesia;
 
 // Global variables
 int X, Y; //posicion circulo pulsante
-float size_letra=32;
+float size_letra=30;
 
 
 class trackTexto {
@@ -76,7 +79,7 @@ class trackTexto {
 
     if (configuracion.letra_menguante) textFont(m_fuente, m_size_letra);
     int distanciaBorde=x;
-    if (x>width/2) distanciaBorde=width-x;
+    if (x>configuracion.width()/2) distanciaBorde=(int)configuracion.width()-x;
     text(texto,x,y+m_size_letra/2, distanciaBorde, m_size_letra*2); //escibir el texto en pantalla    
        
   };
@@ -102,7 +105,6 @@ void setup(){
   on_nueva_size(1280, 720);
   
   fill(configuracion.color_letra);     // relleno dibujo blanco, letra
-  strokeWeight( 7 ); // el borde del las figuras
   frameRate( 16 ); // numero de veces que llamamos a draw por segundo. 
   X = width/2; //empieza en el centro
   Y = height/2;//empieza en el centro
@@ -123,11 +125,12 @@ void draw()
 {
 
   background( configuracion.color_fondo );  
+  pintaFluorescente(height/10);
 
   size_letra=size_letra+sin(frameCount/6); // así generamos el texto pulsante.
   textFont(fuente, size_letra); 
   int distanciaBorde=X;
-  if (X>width/2) distanciaBorde=width-X;
+  if (X>configuracion.width()/2) distanciaBorde=(int)configuracion.width()-X;
   text(texto_intermedio,X,Y+size_letra/2, distanciaBorde, size_letra*2); //escibir el texto en pantalla
   textFont(fuente); //restaura el tamaño de letra original
   
@@ -138,7 +141,7 @@ void draw()
     // hacer que todos los textos avancen
 
     //nueva posicion para los nuevos textos intermedios que lleguen
-    X=(int)random(size_letra*5, width-size_letra*5);
+    X=(int)random(size_letra*5, configuracion.width()-size_letra*5);
     Y=(int)random(size_letra*2, height/2); //para que por lo menos tengan que caer durante la mitad de la pantalla
     nuevo_final=false;  
   }
@@ -154,13 +157,14 @@ void draw()
           txt=null; // para asegurar el uso de garbage collector 
        }
        else if (txt.ha_llegado()&&textos_finales.size()<=configuracion.num_textos_minimo) {
-          X=(int)random(size_letra*5, width-size_letra*5);
+          X=(int)random(size_letra*5, configuracion.width()-size_letra*5);
           Y=(int)random(size_letra*2, height/2); //para que por lo menos tengan que caer durante la mitad de la pantalla
          txt.reinicia(X, Y, X, height, configuracion.retardo, fuente, size_letra); 
          // no lo borramos, lo metemos al principio
        } 
     }
  // drawAxis();
+
 }
 
 // nuevas funciones 
@@ -215,7 +219,7 @@ void drawAxis() {
 void creaPoesia()
 {
   poesia = new ArrayList<String>();
-  poesia.add("¿qué significa?");
+  poesia.add("¿qué significa? conde mor de la pradera que ye esu nenon");
   poesia.add("cómo?");
   poesia.add("qué bonito");
   poesia.add("no entiendo nada");
@@ -236,4 +240,20 @@ void creaPoesia()
   poesia.add("pues a mi plin");
   
 }
+
+void pintaFluorescente(int altura)
+{
+   // pintar luces vibrantes y algo pulsantes en la parte baja del viewport
+   float r=red(configuracion.color_letra);
+   float g=green(configuracion.color_letra);
+   float b=blue(configuracion.color_letra);
+    
+   for (int i=0; i<altura; i++)  
+   {
+     float decremento=sin(2*PI*i/(4*altura));
+     stroke(color(r-r*decremento, g-g*decremento, b-b*decremento));
+     line(0, height-i, configuracion.width(), height-i);
+   }
+}
+
 
