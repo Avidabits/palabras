@@ -11,11 +11,11 @@ class Configura{
   color color_fondo=0; //negro
   color color_letra=color(255, 255, 255);// muy claro
   int num_textos_minimo=5;
-  float factor_anchura=0.6; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
+  float factor_anchura=0.25; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
   // los textos puedan ponerse en una franja vertical y ocupar menos espacio de galeria.
   // cuando calculemos el warping del texto o el ancho de los objetos a pintar, multiplicaremos with por el factor de anchira
-  //int width() {return (int)(factor_anchura*(float)width); }
-  int width() {return width;}// PENDIENTE RECUPERAR METODO ANTERIOR
+  int width() {return (int)(factor_anchura*(float)width); }
+  //int width() {return width;}// PENDIENTE RECUPERAR METODO ANTERIOR
 } 
 
 Configura configuracion=new Configura();
@@ -25,7 +25,7 @@ Configura configuracion=new Configura();
 // con ellas y con la funcion copia_variables_script hare que puedan funcionar 
 // este pde de forma independiente.
 String texto_final = "¿que si quieres hablar conmigo?"; 
-String texto_intermedio ="¿quieres hablar conmigo? ¿?"; 
+String texto_intermedio ="¿quieres hablar conmigo? ¿ehRR?"; 
 Boolean nuevo_final=false; // para saber cuando hay un reconocimiento final nuevo
 // una poesia secreta 
 ArrayList<String> poesia;
@@ -85,7 +85,6 @@ class trackTexto {
     if (x>configuracion.width()/2) distanciaBorde=configuracion.width()-x;
     text(texto,x,y+m_size_letra/2, distanciaBorde, m_size_letra*2); //escibir el texto en pantalla    
     
-
   };
   
   Boolean ha_llegado() {
@@ -119,6 +118,7 @@ void setup(){
   fuente= createFont("Verdana", size_letra);
   textFont(fuente);  
   textAlign(CENTER);
+  textMode(SCREEN);
   rectMode(RADIUS); // Para indicar el rectangulo de texto entre  
  
   creaPoesia();
@@ -148,7 +148,7 @@ void draw()
     // hacer que todos los textos avancen
 
     //nueva posicion para los nuevos textos intermedios que lleguen
-    X=(int)random(size_letra*5, width-size_letra*5);
+    X=(int)random(size_letra*5, configuracion.width()-size_letra*5);
     Y=(int)random(size_letra*2, height/2); //para que por lo menos tengan que caer durante la mitad de la pantalla
     nuevo_final=false;  
   }
@@ -164,7 +164,7 @@ void draw()
           txt=null; // para asegurar el uso de garbage collector 
        }
        else if (txt.ha_llegado()&&textos_finales.size()<=configuracion.num_textos_minimo) {
-          X=(int)random(size_letra*5, width-size_letra*5);
+          X=(int)random(size_letra*5, configuracion.width()-size_letra*5);
           Y=(int)random(size_letra*2, height/2); //para que por lo menos tengan que caer durante la mitad de la pantalla
          txt.reinicia(X, Y, X, height, configuracion.retardo, fuente, size_letra); 
          // no lo borramos, lo metemos al principio
@@ -226,7 +226,7 @@ void creaPoesia()
 {
   poesia = new ArrayList<String>();
 
-  poesia.add("¿qué significa?"); //pendiente , quitar texto testing
+  poesia.add("¿qué significa? LARGO LARGO LARGO LARGISIMO"); //pendiente , quitar texto testing
   poesia.add("cómo?");
   poesia.add("qué bonito");
   poesia.add("no entiendo nada");
