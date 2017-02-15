@@ -11,7 +11,7 @@ class Configura{
   color color_fondo=0; //negro
   color color_letra=color(255, 255, 255);// muy claro
   int num_textos_minimo=5;
-  float factor_anchura=0.5; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
+  float factor_anchura=0.6; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
   // los textos puedan ponerse en una franja vertical y ocupar menos espacio de galeria.
   // cuando calculemos el warping del texto o el ancho de los objetos a pintar, multiplicaremos with por el factor de anchira
   float width() {return (float)width*factor_anchura;}
