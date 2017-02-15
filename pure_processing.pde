@@ -69,8 +69,6 @@ class trackTexto {
     x+=(x_final-x)/retardo_caida;
     y+=(y_final-y)/retardo_caida+1;
     
-    //m_size_letra=map(y, y_inicial, y_final, m_size_letra_inicial, m_size_letra_inicial/2);
-    // para sistemas operativos lento no cambio el tamaño de la letra
      if (configuracion.letra_menguante) m_size_letra=map(y, y_inicial, y_final, m_size_letra_inicial, m_size_letra_inicial/2);
     // para sistemas operativos lento no cambio el tamaño de la letra
 
@@ -80,11 +78,13 @@ class trackTexto {
   void pintate()
   {
 
+    //pendiente
     if (configuracion.letra_menguante) textFont(m_fuente, m_size_letra);
     text(texto,x,y);
 
 
   };
+  
   Boolean ha_llegado() {
      if ((x >= x_final) && (y >= y_final+m_size_letra)) return true; // asume que seguimos trayectoria hacia abajo de caida
     
@@ -106,8 +106,9 @@ void setup(){
   textos_finales = new ArrayList<trackTexto>();  // Create an empty ArrayList
   on_nueva_size(1280, 720);
   
-  fill(255);     // relleno dibujo blanco, letra
-  strokeWeight( 7 ); // el borde del las figuras
+   fill(configuracion.color_letra);     // relleno dibujo blanco, letra
+  frameRate( 16 ); // numero de veces que llamamos a draw por segundo. 
+  strokeWeight( 7 ); // PENDIENTE ELIMINAR
   frameRate( 24 ); // 
   X = width/2; //empieza en el centro
   Y = height/2;//empieza en el centro
@@ -117,6 +118,8 @@ void setup(){
   fuente= createFont("Verdana", size_letra);
   textFont(fuente);  
   textAlign(CENTER);
+  //rectMode(RADIUS); // Para indicar el rectangulo de texto entre  
+  // PENDIENTE PONER
   
   creaPoesia();
 }
@@ -124,10 +127,11 @@ void setup(){
 
 // Main draw loop
 void draw()
-{
+{ // PENDIENTE CAMBIAR
 
   background( configuracion.color_fondo );
-  fill(configuracion.color_letra);
+  fill(configuracion.color_letra);//  pendiente quitar
+  pintaFluorescente(height/10);
 
   size_letra=size_letra+sin(frameCount/6);
   textFont(fuente, size_letra); 
@@ -219,7 +223,7 @@ void creaPoesia()
 {
   poesia = new ArrayList<String>();
 
-  poesia.add("¿qué significa?");
+  poesia.add("¿qué significa? ESTE FLUORESCENTE");
   poesia.add("cómo?");
   poesia.add("qué bonito");
   poesia.add("no entiendo nada");
