@@ -6,7 +6,7 @@
 
 // clase y variable de configuracion
 class Configura{
-  Boolean letra_menguante=true; //poner a false si va demasiado lento.
+  Boolean letra_menguante=false; //poner a false si va demasiado lento.
   int retardo=50;
   color color_fondo=0; //negro
   color color_letra=color(255, 255, 255);// muy claro
@@ -25,20 +25,20 @@ Configura configuracion=new Configura();
 // con ellas y con la funcion copia_variables_script hare que puedan funcionar 
 // este pde de forma independiente.
 String texto_final = "¿que si quieres hablar conmigo?"; 
-String texto_intermedio ="¿quieres hablar conmigo? ¿ehRR?"; 
+String texto_intermedio ="¿decías?"; 
 Boolean nuevo_final=false; // para saber cuando hay un reconocimiento final nuevo
 // una poesia secreta 
 ArrayList<String> poesia;
 
 // Global variables
-int X=0;
-int Y=0; //posicion circulo pulsante
-float size_letra=32;
+int X=1280;
+int Y=720; //posicion circulo pulsante
+float size_letra=30;
 
 void pinta_texto(String texto, int centroX, int centroY, float sizeLetra)
 {
    // helper para homogeneizar el modo de pintar texto porque processinfg JS no acepta determimados modos de rectangulo
-   print ("centroX="); println(centroX);
+   print ("pinta_texto recibe centroX="); print(centroX); print(" ");
   int distanciaBorde=centroX;
   if (centroX>configuracion.width()/2) distanciaBorde=configuracion.width()-centroX;
   text(texto,centroX-distanciaBorde,centroY-sizeLetra, distanciaBorde*2, sizeLetra*4); //escibir el texto en pantalla    
@@ -120,7 +120,8 @@ void setup(){
   
   fill(configuracion.color_letra);     // relleno dibujo blanco, letra
   stroke(configuracion.color_letra);
-  frameRate( 16 ); // numero de veces que llamamos a draw por segundo. 
+  frameRate( 16 ); // numero de veces que llamamos a draw por segundo.
+ println("FRAMERATE: 16") ;
 
   
   
@@ -128,7 +129,6 @@ void setup(){
   fuente= createFont("Verdana", size_letra);
   textFont(fuente);  
   textAlign(CENTER);//importante para escribir textos en modo (x,y, ancho, alto);
-  textMode(SCREEN);
  
   creaPoesia();
 }
@@ -146,8 +146,8 @@ void draw()
   
   // pintamos el texto en modo corner, ancho alto. 
 
-  //pinta_texto(texto_intermedio, X, Y, size_letra);
-  pinta_texto(texto_intermedio, 500, 500, size_letra);
+  pinta_texto(texto_intermedio, X, Y, size_letra);
+  //pinta_texto(texto_intermedio, 500, 500, size_letra);
 
   textFont(fuente); //restaura el tamaño de letra original
   
@@ -202,6 +202,7 @@ void on_nueva_size(int p_ancho, int p_alto)
   size_letra=p_ancho/40;
   X = configuracion.width()/2; //empieza en el centro. 
   Y = height/2;//empieza en el centro
+  print("on_nueva_size->X=");println(X);
    
 }
 
