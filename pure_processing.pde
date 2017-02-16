@@ -31,10 +31,10 @@ Boolean nuevo_final=false; // para saber cuando hay un reconocimiento final nuev
 ArrayList<String> poesia;
 
 // Global variables
-int X, Y; //posicion circulo
+int X, Y; //posicion circulo pulsante
 float size_letra=32;
 
-void pinta_texto(String texto, int centroX, int centroY, int sizeLetra)
+void pinta_texto(String texto, int centroX, int centroY, float sizeLetra)
 {
    // helper para homogeneizar el modo de pintar texto porque processinfg JS no acepta determimados modos de rectangulo
    print ("centroX="); println(centroX);
@@ -92,7 +92,7 @@ class trackTexto {
   {
  
     if (configuracion.letra_menguante) textFont(m_fuente, m_size_letra);
-    pinta_texto(texto, x, y, (int)m_size_letra);
+    pinta_texto(texto, x, y, m_size_letra);
 
   };
   
@@ -145,7 +145,7 @@ void draw()
   textFont(fuente, size_letra);
   
   // pintamos el texto en modo corner, ancho alto. 
-  pinta_texto(texto_intermedio, X, Y, (int)size_letra);
+  pinta_texto(texto_intermedio, X, Y, size_letra);
 
   textFont(fuente); //restaura el tamaño de letra original
   
