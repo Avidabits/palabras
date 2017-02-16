@@ -269,18 +269,20 @@ void pintaFluorescente(int altura)
      stroke(color(r-r*decremento, g-g*decremento, b-b*decremento));
      line(0, height-i, configuracion.anchura(), height-i);
    }
+   // rmbr 
+   println("flour...");
 }
 
 void pinta_texto(String texto, int centroX, int centroY, float sizeLetra)
 {
    // helper para homogeneizar el modo de pintar texto porque processinfg JS no acepta determimados modos de rectangulo
-   print ("pinta_texto recibe centroX="); print(centroX); print(" ");
+  //RMBR print ("pinta_texto recibe centroX="); print(centroX); print(" ");
   int distanciaBorde=centroX;
   if (centroX>configuracion.anchura()/2) distanciaBorde=(int)configuracion.anchura()-centroX;
   text(texto,centroX-distanciaBorde,centroY-sizeLetra, distanciaBorde*2, sizeLetra*4); //escibir el texto en pantalla    
   noFill();
   rect(centroX-distanciaBorde,centroY-sizeLetra, distanciaBorde*2, sizeLetra*4);
-  print(texto);print(" ancho->");println(distanciaBorde*2);
+  //rmbr print(texto);print(" ancho->");println(distanciaBorde*2);
   
 };
 
