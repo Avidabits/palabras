@@ -14,7 +14,7 @@ class Configura{
   float factor_anchura=0.6; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
   // los textos puedan ponerse en una franja vertical y ocupar menos espacio de galeria.
   // cuando calculemos el warping del texto o el ancho de los objetos a pintar, multiplicaremos with por el factor de anchira
-  float width() {return (float)width*factor_anchura;}
+  float anchura() {return (float)width*factor_anchura;}
 } 
 
 Configura configuracion=new Configura();
@@ -30,7 +30,8 @@ Boolean nuevo_final=false; // para saber cuando hay un reconocimiento final nuev
 ArrayList<String> poesia;
 
 // Global variables
-int X, Y; //posicion circulo
+int X=640; 
+int Y=360; //posicion circulo
 float size_letra=32;
 
 
@@ -75,15 +76,13 @@ class trackTexto {
   }; 
   
   
+  
+  // seguimiento hasta aqui todo igual
   void pintate()
   {
-
  
     if (configuracion.letra_menguante) textFont(m_fuente, m_size_letra);
-    int distanciaBorde=x;
-    if (x>configuracion.width()/2) distanciaBorde=(int)configuracion.width()-x;
-    text(texto,x,y+m_size_letra/2, distanciaBorde, m_size_letra*2); //escibir el texto en pantalla    
-
+    pinta_texto(texto, x, y, m_size_letra);
 
   };
   
@@ -94,7 +93,7 @@ class trackTexto {
 
 }; 
   
-}; //class tractTexto
+}; //class tracktTexto
 
 ArrayList<trackTexto> textos_finales;
 
@@ -104,21 +103,24 @@ PFont fuente;
 // Setup the Processing Canvas
 void setup(){
   
-
   textos_finales = new ArrayList<trackTexto>();  // Create an empty ArrayList
+  
   on_nueva_size(1280, 720);
+  print("on nueva size llamada width:");println(width);
+  print("configuracion.anchura:");println(configuracion.anchura());
+  
   
   fill(configuracion.color_letra);     // relleno dibujo blanco, letra
-  frameRate( 16 ); // numero de veces que llamamos a draw por segundo. 
-  X = width/2; //empieza en el centro
-  Y = height/2;//empieza en el centro
+  stroke(configuracion.color_letra);
+  frameRate( 16 ); // numero de veces que llamamos a draw por segundo.
+ println("FRAMERATE: 16") ;
+
   
   
   // printArray(PFont.list());// mirando esas fuentes
   fuente= createFont("Verdana", size_letra);
   textFont(fuente);  
-  textAlign(CENTER);
-  rectMode(RADIUS); // Para indicar el rectangulo de texto entre  
+  textAlign(CENTER);//importante para escribir textos en modo (x,y, ancho, alto);
  
   creaPoesia();
 }
@@ -132,8 +134,13 @@ void draw()
   fill(configuracion.color_letra);
 
   size_letra=size_letra+sin(frameCount/6);
-  textFont(fuente, size_letra); 
-  text(texto_intermedio,X,Y+size_letra/2); //escibir el texto en pantalla
+  textFont(fuente, size_letra);
+  
+  // pintamos el texto en modo corner, ancho alto. 
+
+  pinta_texto(texto_intermedio, X, Y, size_letra);
+  //pinta_texto(texto_intermedio, 500, 500, size_letra);
+
   textFont(fuente); //restaura el tamaño de letra original
   
   if (nuevo_final) 
@@ -143,8 +150,8 @@ void draw()
     // hacer que todos los textos avancen
 
     //nueva posicion para los nuevos textos intermedios que lleguen
-    X=(int)random(size_letra*5, width-size_letra*5);
-    Y=(int)random(size_letra*2, height/2); //para que por lo menos tengan que caer durante la mitad de la pantalla
+    X=(int)random(size_letra*5, (float)configuracion.anchura()-size_letra*5.0);
+    Y=(int)random(size_letra*2, height/2.0); //para que por lo menos tengan que caer durante la mitad de la pantalla
     nuevo_final=false;  
   }
   
@@ -159,7 +166,7 @@ void draw()
           txt=null; // para asegurar el uso de garbage collector 
        }
        else if (txt.ha_llegado()&&textos_finales.size()<=configuracion.num_textos_minimo) {
-          X=(int)random(size_letra*5, width-size_letra*5);
+          X=(int)random(size_letra*5, configuracion.anchura()-size_letra*5);
           Y=(int)random(size_letra*2, height/2); //para que por lo menos tengan que caer durante la mitad de la pantalla
          txt.reinicia(X, Y, X, height, configuracion.retardo, fuente, size_letra); 
          // no lo borramos, lo metemos al principio
@@ -178,6 +185,9 @@ void copia_variables_script(String texto_reconocido, Boolean is_final)
         }
         else texto_intermedio=texto_reconocido;
 }
+
+
+// seguimiento: desde aqui todo igual
 
 // se usa para inicializar el tamaño y tambien es llamada desde el htlml cuando cambia el tamaño 
 // de la venta
@@ -254,7 +264,20 @@ void pintaFluorescente(int altura)
    {
      float decremento=sin(2*PI*i/(4*altura));
      stroke(color(r-r*decremento, g-g*decremento, b-b*decremento));
-     line(0, height-i, configuracion.width(), height-i);
+     line(0, height-i, configuracion.anchura(), height-i);
    }
 }
+
+void pinta_texto(String texto, int centroX, int centroY, float sizeLetra)
+{
+   // helper para homogeneizar el modo de pintar texto porque processinfg JS no acepta determimados modos de rectangulo
+   print ("pinta_texto recibe centroX="); print(centroX); print(" ");
+  int distanciaBorde=centroX;
+  if (centroX>configuracion.anchura()/2) distanciaBorde=(int)configuracion.anchura()-centroX;
+  text(texto,centroX-distanciaBorde,centroY-sizeLetra, distanciaBorde*2, sizeLetra*4); //escibir el texto en pantalla    
+  noFill();
+  rect(centroX-distanciaBorde,centroY-sizeLetra, distanciaBorde*2, sizeLetra*4);
+  print(texto);print(" ancho->");println(distanciaBorde*2);
+  
+};
 
