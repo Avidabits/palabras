@@ -31,7 +31,8 @@ Boolean nuevo_final=false; // para saber cuando hay un reconocimiento final nuev
 ArrayList<String> poesia;
 
 // Global variables
-int X, Y; //posicion circulo pulsante
+int X=0;
+int Y=0; //posicion circulo pulsante
 float size_letra=32;
 
 void pinta_texto(String texto, int centroX, int centroY, float sizeLetra)
@@ -43,7 +44,7 @@ void pinta_texto(String texto, int centroX, int centroY, float sizeLetra)
   text(texto,centroX-distanciaBorde,centroY-sizeLetra, distanciaBorde*2, sizeLetra*4); //escibir el texto en pantalla    
   noFill();
   rect(centroX-distanciaBorde,centroY-sizeLetra, distanciaBorde*2, sizeLetra*4);
-  print(texto);print(" ancho");println(distanciaBorde*2);
+  print(texto);print(" ancho:");println(distanciaBorde*2);
   
 };
 
@@ -115,13 +116,14 @@ void setup(){
   
 
   textos_finales = new ArrayList<trackTexto>();  // Create an empty ArrayList
+
+  
   on_nueva_size(1280, 720);
   
   fill(configuracion.color_letra);     // relleno dibujo blanco, letra
   stroke(configuracion.color_letra);
   frameRate( 16 ); // numero de veces que llamamos a draw por segundo. 
-  X = configuracion.width()/2; //empieza en el centro. 
-  Y = height/2;//empieza en el centro
+
   
   
   // printArray(PFont.list());// mirando esas fuentes
@@ -198,6 +200,8 @@ void on_nueva_size(int p_ancho, int p_alto)
 {
   size( p_ancho, p_alto ); //tamaño del canvas
   size_letra=p_ancho/40;
+  X = configuracion.width()/2; //empieza en el centro. 
+  Y = height/2;//empieza en el centro
    
 }
 
