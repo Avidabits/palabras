@@ -276,7 +276,7 @@ void pintaFluorescente(int altura)
      line(0, height-i, configuracion.anchura(), height-i);
    }
    // rmbr 
-   println("flour...");
+   println("flouracion...");
 }
 
 void pinta_texto(String texto, int centroX, int centroY, float sizeLetra)
