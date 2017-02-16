@@ -114,9 +114,7 @@ PFont fuente;
 // Setup the Processing Canvas
 void setup(){
   
-
   textos_finales = new ArrayList<trackTexto>();  // Create an empty ArrayList
-
   
   on_nueva_size(1280, 720);
   
@@ -147,7 +145,9 @@ void draw()
   textFont(fuente, size_letra);
   
   // pintamos el texto en modo corner, ancho alto. 
-  pinta_texto(texto_intermedio, X, Y, size_letra);
+
+  //pinta_texto(texto_intermedio, X, Y, size_letra);
+  pinta_texto(texto_intermedio, 500, 500, size_letra);
 
   textFont(fuente); //restaura el tamaño de letra original
   
@@ -158,8 +158,8 @@ void draw()
     // hacer que todos los textos avancen
 
     //nueva posicion para los nuevos textos intermedios que lleguen
-    X=(int)random(size_letra*5, configuracion.width()-size_letra*5);
-    Y=(int)random(size_letra*2, height/2); //para que por lo menos tengan que caer durante la mitad de la pantalla
+    X=(int)random(size_letra*5, (float)configuracion.width()-size_letra*5.0);
+    Y=(int)random(size_letra*2, height/2.0); //para que por lo menos tengan que caer durante la mitad de la pantalla
     nuevo_final=false;  
   }
   
