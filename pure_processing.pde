@@ -110,7 +110,7 @@ void setup(){
   print("configuracion.anchura:");println(configuracion.anchura());
   
   
-  fill(configuracion.color_letra);     // relleno dibujo blanco, letra
+  //fill(configuracion.color_letra);     // relleno dibujo blanco, letra
   stroke(configuracion.color_letra);
   frameRate( 16 ); // numero de veces que llamamos a draw por segundo.
  println("FRAMERATE: 16") ;
@@ -131,18 +131,24 @@ void setup(){
 // Main draw loop
 void draw()
 {
-
-  background( configuracion.color_fondo );  
+  background( configuracion.color_fondo );
+  //fill(configuracion.color_letra);   
   
   // RMBR: HASTA AQUI TODO IGUAL
   pintaFluorescente(height/10);
+  
+  //fill(configuracion.color_letra);
+  stroke(configuracion.color_letra);
+  
+  
+   // seguimiento: desde aqui todo igual   
+  size_letra=size_letra+sin(frameCount/6);
+  textFont(fuente, size_letra);
+  
+  // pintamos el texto en modo corner, ancho alto. 
 
-  size_letra=size_letra+sin(frameCount/6); // así generamos el texto pulsante.
-  textFont(fuente, size_letra); 
-
-// seguimiento: desde aqui todo igual     
-   pinta_texto(texto_intermedio, X, Y, size_letra);
- 
+  pinta_texto(texto_intermedio, X, Y, size_letra);
+  //pinta_texto(texto_intermedio, 500, 500, size_letra);
 
   textFont(fuente); //restaura el tamaño de letra original
   
@@ -153,11 +159,11 @@ void draw()
     // hacer que todos los textos avancen
 
     //nueva posicion para los nuevos textos intermedios que lleguen
-    X=(int)random(size_letra*5, configuracion.anchura()-size_letra*5);
-    Y=(int)random(size_letra*2, height/2); //para que por lo menos tengan que caer durante la mitad de la pantalla
+    X=(int)random(size_letra*5, (float)configuracion.anchura()-size_letra*5.0);
+    Y=(int)random(size_letra*2, height/2.0); //para que por lo menos tengan que caer durante la mitad de la pantalla
     nuevo_final=false;  
   }
-
+  
   // en cualquier caso hay que hacer que los textos finales anteriores avances
   for (int i = textos_finales.size()-1; i >= 0; i--) {
        trackTexto txt=textos_finales.get(i);
