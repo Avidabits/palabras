@@ -13,7 +13,7 @@ class Configura{
   color color_fondo=0; //negro
   color color_letra=color(255, 255, 255);// muy claro
   int num_textos_minimo=5;
-  float factor_anchura=0.25; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
+  float factor_anchura=1.0; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
   // los textos puedan ponerse en una franja vertical y ocupar menos espacio de galeria.
   // cuando calculemos el warping del texto o el ancho de los objetos a pintar, multiplicaremos with por el factor de anchira
   float anchura() {return (float)width*factor_anchura;}
@@ -204,7 +204,7 @@ void copia_variables_script(String texto_reconocido, Boolean is_final)
 void on_nueva_size(int p_ancho, int p_alto)
 {
   size( p_ancho, p_alto ); //tamaño del canvas
-  size_letra=configuracion.anchura()/20;
+  size_letra=configuracion.anchura()/30;
   texto_debug("on_nueva_size: p_ancho="+p_ancho);
   texto_debug("on_nueva_size: sizeletra=p_ancho/20="+size_letra);
   
