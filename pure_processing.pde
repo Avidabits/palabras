@@ -12,7 +12,7 @@ class Configura{
   int retardo=50;
   color color_fondo=0; //negro
   color color_letra=color(255, 255, 255);// muy claro
-  int num_textos_minimo=5;
+  int num_textos_minimo=8;
   float factor_anchura=1.0; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
   // los textos puedan ponerse en una franja vertical y ocupar menos espacio de galeria.
   // cuando calculemos el warping del texto o el ancho de los objetos a pintar, multiplicaremos with por el factor de anchira
@@ -204,7 +204,7 @@ void copia_variables_script(String texto_reconocido, Boolean is_final)
 void on_nueva_size(int p_ancho, int p_alto)
 {
   size( p_ancho, p_alto ); //tamaño del canvas
-  size_letra=configuracion.anchura()/30;
+  size_letra=configuracion.anchura()/40;
   texto_debug("on_nueva_size: p_ancho="+p_ancho);
   texto_debug("on_nueva_size: sizeletra=p_ancho/20="+size_letra);
   
@@ -243,7 +243,7 @@ void creaPoesia()
 {
   poesia = new ArrayList<String>();
 
-  poesia.add("¿qué significa? ¿?"); //pendiente , quitar texto testing
+  poesia.add("¿qué significa?"); //pendiente , quitar texto testing
   poesia.add("cómo?");
   poesia.add("qué bonito");
   poesia.add("no entiendo nada");
@@ -252,12 +252,12 @@ void creaPoesia()
   poesia.add("te espero en casa");
   poesia.add("¿cuanto cuesta?");
   poesia.add("por qué");
-  poesia.add("siempre te quedas ahí pasada");
+  poesia.add("siempre te quedas ahí parada");
   poesia.add("pues sigo sin entender nada");
   poesia.add("cuanto más los miro");
   poesia.add("mirar allí");
   poesia.add("no la encuentro");
-  poesia.add("dónde está la tuyo");
+  poesia.add("dónde está la tuya");
   poesia.add("siempre pienso en eso");
   poesia.add("a mi no me mires");
   poesia.add("ya entiendo lo que quiere decir");
