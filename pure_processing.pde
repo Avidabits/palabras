@@ -11,7 +11,7 @@ class Configura{
   Boolean flourescente=false;
   int retardo=50;
   color color_fondo=0; //negro
-  color color_letra=color(255, 255, 255);// muy claro
+  color color_letra=color(207, 238, 62);// verde luciernaga
   int num_textos_minimo=8;
   float factor_anchura=1.0; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
   // los textos puedan ponerse en una franja vertical y ocupar menos espacio de galeria.
@@ -110,7 +110,7 @@ void setup(){
   on_nueva_size(1280, 720);
  
   
-  //fill(configuracion.color_letra);     // relleno dibujo blanco, letra
+  fill(configuracion.color_letra);     // relleno dibujo blanco, letra
   stroke(configuracion.color_letra);
   frameRate( 16 ); // numero de veces que llamamos a draw por segundo.
   texto_debug("FRAMERATE: 16");
@@ -157,6 +157,7 @@ void draw()
   {
     // meter el texto final en la lista de textos finales
     textos_finales.add(new trackTexto(texto_final, X, Y, X, height, configuracion.retardo, fuente, size_letra));  // añade el nuevo texto
+    
     // hacer que todos los textos avancen
 
     //nueva posicion para los nuevos textos intermedios que lleguen
@@ -179,6 +180,7 @@ void draw()
           X=(int)random(size_letra*5, configuracion.anchura()-size_letra*5);
           Y=(int)random(size_letra*2, height/2); //para que por lo menos tengan que caer durante la mitad de la pantalla
          txt.reinicia(X, Y, X, height, configuracion.retardo, fuente, size_letra); 
+          
          // no lo borramos, lo metemos al principio
        } 
     }
@@ -243,25 +245,16 @@ void creaPoesia()
 {
   poesia = new ArrayList<String>();
 
-  poesia.add("¿qué significa?"); //pendiente , quitar texto testing
-  poesia.add("cómo?");
-  poesia.add("qué bonito");
-  poesia.add("no entiendo nada");
-  poesia.add("pues a mi no me gusta");
-  poesia.add("esta noche no he podido dormir");
-  poesia.add("te espero en casa");
-  poesia.add("¿cuanto cuesta?");
-  poesia.add("por qué");
-  poesia.add("siempre te quedas ahí parada");
-  poesia.add("pues sigo sin entender nada");
-  poesia.add("cuanto más los miro");
-  poesia.add("mirar allí");
-  poesia.add("no la encuentro");
-  poesia.add("dónde está la tuya");
-  poesia.add("siempre pienso en eso");
-  poesia.add("a mi no me mires");
-  poesia.add("ya entiendo lo que quiere decir");
-  poesia.add("pues a mi plin");
+  poesia.add("luciérnagas"); //pendiente , quitar texto testing
+  poesia.add("iluminan la noche");
+  poesia.add("energía interior");
+  poesia.add("mentes creativas");
+  poesia.add("apoyo y conexión");
+  poesia.add("estamos deseando conocerte");
+  poesia.add("¿eres una luciérnaga?");
+  poesia.add("¿porqué?");
+  poesia.add("luciérnaga");
+  poesia.add("conexiones");
   
 }
 
