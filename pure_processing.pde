@@ -10,7 +10,6 @@ class Configura{
   Boolean letra_menguante=true; //poner a false si va demasiado lento.
   Boolean flourescente=false;
   Boolean subiendo=true; // las letras pueden subir o bajar
-  int retardo=50; //quitar kk
   color color_fondo=0; //negro
   color color_letra=color(207, 238, 62);// verde luciernaga
   int num_textos_minimo=8;
@@ -46,34 +45,35 @@ class trackTexto {
   int y;
   int x_final;
   int y_final;
-  int retardo_caida;
   float m_size_letra;
   float m_size_letra_inicial;
   PFont m_fuente;
-  trackTexto(String nuevo_texto, int XInicial, int YInicial, int XFinal, int YFinal, int retardo, PFont p_fuente, float p_size_letra)
+  trackTexto(String nuevo_texto, int XInicial, int YInicial, int XFinal, int YFinal, PFont p_fuente, float p_size_letra)
   {  
     
-    x=x_inicial=XInicial; y=y_inicial=YInicial; x_final=XFinal; y_final=YFinal; retardo_caida=retardo;
+    x=x_inicial=XInicial; y=y_inicial=YInicial; x_final=XFinal; y_final=YFinal; 
     texto=nuevo_texto;
     m_fuente=p_fuente;
     m_size_letra=m_size_letra_inicial=p_size_letra;
     
   };
   
-  void reinicia(int XInicial, int YInicial, int XFinal, int YFinal, int retardo, PFont p_fuente, float p_size_letra)
+  void reinicia(int XInicial, int YInicial, int XFinal, int YFinal, PFont p_fuente, float p_size_letra)
   {
-    x=x_inicial=XInicial; y=y_inicial=YInicial; x_final=XFinal; y_final=YFinal; retardo_caida=retardo;
+    x=x_inicial=XInicial; y=y_inicial=YInicial; x_final=XFinal; y_final=YFinal; 
     m_fuente=p_fuente;
-    m_size_letra=m_size_letra_inicial=p_size_letra;    
+    m_size_letra=m_size_letra_inicial=p_size_letra;   
+   texto_debug("reiniciando..."); 
   };
   
   void avanza()
   {
-       
-    x+=(x_final-x)/retardo_caida;
-    y+=(y_final-y)/retardo_caida;
-    print("pos:");println(y);
-     if (configuracion.letra_menguante) m_size_letra=map(y, y_inicial, y_final, m_size_letra_inicial, m_size_letra_inicial/4);
+    int pasosX=(x_final-x_inicial)/100;
+    int pasosY=(y_final-y_inicial)/100;   
+    x+=pasosX;
+    y+=pasosY;
+
+    if (configuracion.letra_menguante) m_size_letra=map(y, y_inicial, y_final, m_size_letra_inicial, m_size_letra_inicial/3);
     // para sistemas operativos lento no cambio el tamaño de la letra
 
   }; 
@@ -90,14 +90,19 @@ class trackTexto {
   
   Boolean ha_llegado() 
   {
-     if (configuracion.subiendo) {
-       if (y < (y_final-m_size_letra)) return true; // trayectoria hacia arriba 
+    
+    if (configuracion.subiendo) {
+       if (y <= (y_final)) 
+       {
+         return true; // trayectoria hacia arriba         
+       }
      }
      else {
-       if (y >= (y_final+m_size_letra)) return true; // trayectoria hacia abajo de caida
+       if (y >= (y_final)) {
+        return true; // trayectoria hacia abajo de caida
+       }
      }
      
-     texto_debug("no ha llegado");
      return false;
   }; 
   
@@ -147,7 +152,7 @@ void draw()
   stroke(configuracion.color_letra);
   
   
-   // seguimiento: desde aqui todo igual   
+   // este seno se usa para la letra pulsante del texto intermedio
   size_letra=size_letra+sin(frameCount/6);
   textFont(fuente, size_letra);
   // pintamos el texto en modo corner, ancho alto. 
@@ -158,14 +163,14 @@ void draw()
   if (nuevo_final) 
   {
     // meter el texto final en la lista de textos finales (x inicial, x final, x fina, y final)
-    if (configuracion.subiendo) textos_finales.add(new trackTexto(texto_final, X, Y, X, 0, configuracion.retardo, fuente, size_letra));  // añade el nuevo texto subiendo
-    else textos_finales.add(new trackTexto(texto_final, X, Y, X, height, configuracion.retardo, fuente, size_letra));  // añade el nuevo texto bajando
+    if (configuracion.subiendo) textos_finales.add(new trackTexto(texto_final, X, Y, X, 0, fuente, size_letra));  // añade el nuevo texto subiendo
+    else textos_finales.add(new trackTexto(texto_final, X, Y, X, height, fuente, size_letra));  // añade el nuevo texto bajando
     
     // hacer que todos los textos avancen
 
     //nueva posicion para los nuevos textos intermedios que lleguen
     X=(int)random(size_letra*5, (float)configuracion.anchura()-size_letra*5.0);
-    if (configuracion.subiendo) Y=(int)random(height, height/2); // que suba desde abajo 
+    if (configuracion.subiendo) Y=(int)random(height-size_letra, height/2); // que suba desde abajo 
     else Y=(int)random(size_letra*2, height/2.0); //para que por lo menos tengan que caer durante la mitad de la pantalla
    
     nuevo_final=false;  
@@ -176,20 +181,21 @@ void draw()
        trackTexto txt=textos_finales.get(i);
        txt.avanza();
        txt.pintate();
-       if (txt.ha_llegado()&&textos_finales.size()>configuracion.num_textos_minimo) {
+       if (txt.ha_llegado()&&(textos_finales.size()>configuracion.num_textos_minimo)) {
           // Items can be deleted with remove().
+          texto_debug("borrando");
           textos_finales.remove(i);
           txt=null; // para asegurar el uso de garbage collector 
        }
-       else if (txt.ha_llegado()&&textos_finales.size()<=configuracion.num_textos_minimo) {
+       else if (txt.ha_llegado()&&(textos_finales.size()<=configuracion.num_textos_minimo)) {
           X=(int)random(size_letra*5, configuracion.anchura()-size_letra*5);
           if (configuracion.subiendo){
             Y=(int)random(height, height/2); // que suba desde abajo
-            txt.reinicia(X, Y, X, 0, configuracion.retardo, fuente, size_letra); //subiendo
+            txt.reinicia(X, Y, X, 0, fuente, size_letra); //subiendo
           }
           else {          
             Y=(int)random(size_letra*2, height/2); //para que por lo menos tengan que caer durante la mitad de la pantalla
-            txt.reinicia(X, Y, X, height, configuracion.retardo, fuente, size_letra); //bajando
+            txt.reinicia(X, Y, X, height, fuente, size_letra); //bajando
           }
                 
          // no lo borramos, lo metemos al principio
