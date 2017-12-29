@@ -144,11 +144,11 @@ void setup(){
 void draw()
 {
   background( configuracion.color_fondo );
-  //fill(configuracion.color_letra);   
+  
   
   if (configuracion.flourescente)pintaFluorescente(height/10);
   
-  //fill(configuracion.color_letra);
+  fill(configuracion.color_letra);
   stroke(configuracion.color_letra);
   
   
