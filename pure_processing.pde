@@ -9,6 +9,7 @@ class Configura{
   Boolean depuracion=false;
   Boolean letra_menguante=true; //poner a false si va demasiado lento.
   Boolean flourescente=false;
+  Boolean subiendo=true; // las letras pueden subir o bajar
   int retardo=50;
   color color_fondo=0; //negro
   color color_letra=color(207, 238, 62);// verde luciernaga
@@ -70,15 +71,14 @@ class trackTexto {
   {
        
     x+=(x_final-x)/retardo_caida;
-    y+=(y_final-y)/retardo_caida+1;
-    
-     if (configuracion.letra_menguante) m_size_letra=map(y, y_inicial, y_final, m_size_letra_inicial, m_size_letra_inicial/2);
+    y+=(y_final-y)/retardo_caida;
+    print("pos:");println(y);
+     if (configuracion.letra_menguante) m_size_letra=map(y, y_inicial, y_final, m_size_letra_inicial, m_size_letra_inicial/4);
     // para sistemas operativos lento no cambio el tamaño de la letra
 
   }; 
   
-  
-  
+
   // seguimiento hasta aqui todo igual
   void pintate()
   {
@@ -88,12 +88,18 @@ class trackTexto {
 
   };
   
-  Boolean ha_llegado() {
-     if ((x >= x_final) && (y >= y_final+m_size_letra)) return true; // asume que seguimos trayectoria hacia abajo de caida
-    
+  Boolean ha_llegado() 
+  {
+     if (configuracion.subiendo) {
+       if (y < (y_final-m_size_letra)) return true; // trayectoria hacia arriba 
+     }
+     else {
+       if (y >= (y_final+m_size_letra)) return true; // trayectoria hacia abajo de caida
+     }
+     
+     texto_debug("no ha llegado");
      return false;
-
-}; 
+  }; 
   
 }; //class tracktTexto
 
@@ -135,7 +141,6 @@ void draw()
   background( configuracion.color_fondo );
   //fill(configuracion.color_letra);   
   
-  // RMBR: HASTA AQUI TODO IGUAL
   if (configuracion.flourescente)pintaFluorescente(height/10);
   
   //fill(configuracion.color_letra);
@@ -145,24 +150,24 @@ void draw()
    // seguimiento: desde aqui todo igual   
   size_letra=size_letra+sin(frameCount/6);
   textFont(fuente, size_letra);
-  
   // pintamos el texto en modo corner, ancho alto. 
-
   pinta_texto(texto_intermedio, X, Y, size_letra);
-  //pinta_texto(texto_intermedio, 500, 500, size_letra);
-
   textFont(fuente); //restaura el tamaño de letra original
+  
   
   if (nuevo_final) 
   {
-    // meter el texto final en la lista de textos finales
-    textos_finales.add(new trackTexto(texto_final, X, Y, X, height, configuracion.retardo, fuente, size_letra));  // añade el nuevo texto
+    // meter el texto final en la lista de textos finales (x inicial, x final, x fina, y final)
+    if (configuracion.subiendo) textos_finales.add(new trackTexto(texto_final, X, Y, X, 0, configuracion.retardo, fuente, size_letra));  // añade el nuevo texto subiendo
+    else textos_finales.add(new trackTexto(texto_final, X, Y, X, height, configuracion.retardo, fuente, size_letra));  // añade el nuevo texto bajando
     
     // hacer que todos los textos avancen
 
     //nueva posicion para los nuevos textos intermedios que lleguen
     X=(int)random(size_letra*5, (float)configuracion.anchura()-size_letra*5.0);
-    Y=(int)random(size_letra*2, height/2.0); //para que por lo menos tengan que caer durante la mitad de la pantalla
+    if (configuracion.subiendo) Y=(int)random(height, height/2); // que suba desde abajo 
+    else Y=(int)random(size_letra*2, height/2.0); //para que por lo menos tengan que caer durante la mitad de la pantalla
+   
     nuevo_final=false;  
   }
   
@@ -178,13 +183,19 @@ void draw()
        }
        else if (txt.ha_llegado()&&textos_finales.size()<=configuracion.num_textos_minimo) {
           X=(int)random(size_letra*5, configuracion.anchura()-size_letra*5);
-          Y=(int)random(size_letra*2, height/2); //para que por lo menos tengan que caer durante la mitad de la pantalla
-         txt.reinicia(X, Y, X, height, configuracion.retardo, fuente, size_letra); 
-          
+          if (configuracion.subiendo){
+            Y=(int)random(height, height/2); // que suba desde abajo
+            txt.reinicia(X, Y, X, 0, configuracion.retardo, fuente, size_letra); //subiendo
+          }
+          else {          
+            Y=(int)random(size_letra*2, height/2); //para que por lo menos tengan que caer durante la mitad de la pantalla
+            txt.reinicia(X, Y, X, height, configuracion.retardo, fuente, size_letra); //bajando
+          }
+                
          // no lo borramos, lo metemos al principio
        } 
     }
- // drawAxis();
+  if (configuracion.depuracion) drawAxis();
 }
 
 
@@ -236,9 +247,9 @@ void keyPressed()
  **/
 void drawAxis() {
   stroke(255, 0, 0);
-  line(0, 0, 20, 0); //eje x rojo
+  line(0, 0, 32, 0); //eje x rojo
   stroke(0, 255, 0); // eje y verde
-  line(0, 0, 0, 20);
+  line(0, 0, 0, 32);
 }
 
 void creaPoesia()
