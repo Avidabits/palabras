@@ -10,7 +10,7 @@ class Configura{
   Boolean letra_menguante=true; //poner a false si va demasiado lento.
   Boolean flourescente=false;
   Boolean subiendo=true; // las letras pueden subir o bajar
-  int retardo=50;
+  int retardo=50; //quitar kk
   color color_fondo=0; //negro
   color color_letra=color(207, 238, 62);// verde luciernaga
   int num_textos_minimo=8;
