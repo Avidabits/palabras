@@ -118,6 +118,8 @@ void setup(){
   
   textos_finales = new ArrayList<trackTexto>();  // Create an empty ArrayList
   
+  size(1280, 720);
+  frame.setResizable(true);// rmbr 30.12.2017
   on_nueva_size(1280, 720);
  
   
@@ -222,10 +224,13 @@ void copia_variables_script(String texto_reconocido, Boolean is_final)
 // de la venta
 void on_nueva_size(int p_ancho, int p_alto)
 {
-  size( p_ancho, p_alto ); //tamaño del canvas
+  // rmbr 30.12.2017
+  //size( p_ancho, p_alto ); //// rmbr 30.12.2017
+  setSize(p_ancho, p_alto );// rmbr 30.12.2017
+  
   size_letra=configuracion.anchura()/40;
   texto_debug("on_nueva_size: p_ancho="+p_ancho);
-  texto_debug("on_nueva_size: sizeletra=p_ancho/20="+size_letra);
+  texto_debug("on_nueva_size: sizeletra=p_ancho/40="+size_letra);
   
 }
 
@@ -241,7 +246,7 @@ void keyPressed()
   if (gIndex >=poesia.size()) gIndex=0;
   texto_final=texto_intermedio;
   texto_intermedio=poesia.get(gIndex);
-  gIndex++;
+  gIndex++;   
     
 }
 
