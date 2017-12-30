@@ -11,7 +11,8 @@ class Configura{
   Boolean flourescente=false;
   Boolean subiendo=true; // las letras pueden subir o bajar
   color color_fondo=0; //negro
-  color color_letra=color(207, 238, 62);// verde luciernaga
+  //color color_letra=color(207, 238, 62);// verde luciernaga
+  color color_letra=color(255, 0, 0);// rojo depuracion
   int num_textos_minimo=8;
   float factor_anchura=1.0; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
   // los textos puedan ponerse en una franja vertical y ocupar menos espacio de galeria.
