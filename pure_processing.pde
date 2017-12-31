@@ -2,7 +2,8 @@
   El instante hablado,  
   scketch processing pensado para visualizar datos de reconocimiento de voz
   procedentes de un script en html que sa la speech recognition api de google
-*/  
+*/ 
+
 
 // clase y variable de configuracion
 class Configura{
