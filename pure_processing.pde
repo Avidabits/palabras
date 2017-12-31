@@ -12,7 +12,7 @@ class Configura{
   Boolean subiendo=true; // las letras pueden subir o bajar
   color color_fondo=0; //negro
   //color color_letra=color(207, 238, 62);// verde luciernaga
-  color color_letra=color(255, 0, 0);// rojo depuracion
+  color color_letra=color(0, 0, 255);// azul depuracion
   int num_textos_minimo=8;
   float factor_anchura=1.0; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
   // los textos puedan ponerse en una franja vertical y ocupar menos espacio de galeria.
@@ -120,7 +120,7 @@ void setup(){
   textos_finales = new ArrayList<trackTexto>();  // Create an empty ArrayList
   
   size(1280, 720);
-  frame.setResizable(true);// rmbr 30.12.2017
+  //frame.setResizable(true);// rmbr 31.12.2017 elimino esto porque no es reconocido en processingJS
   on_nueva_size(1280, 720);
  
   
@@ -226,8 +226,9 @@ void copia_variables_script(String texto_reconocido, Boolean is_final)
 void on_nueva_size(int p_ancho, int p_alto)
 {
   // rmbr 30.12.2017
-  //size( p_ancho, p_alto ); //// rmbr 30.12.2017
-  setSize(p_ancho, p_alto );// rmbr 30.12.2017
+  // size( p_ancho, p_alto ); //// rmbr 30.12.2017 no se puede usar excepto como primera línes
+  // setSize(p_ancho, p_alto );// rmbr 31.12.2017 No soportado en processing JS
+  // para solventar esto, una vez puesta la aplicacion en ventana completa habrá que recargar la página con ctrl + F5
   
   size_letra=configuracion.anchura()/40;
   texto_debug("on_nueva_size: p_ancho="+p_ancho);
