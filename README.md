@@ -1,10 +1,8 @@
 # El instante de las palabras
 Instalación de arte electrónico, arte generativo, reconocimiento de voz. 
-Url de pruebas:  http://rawgit.com/Avidabits/palabras/master/speech.html
 
-Url de producción:
-   https://cdn.rawgit.com/Avidabits/palabras/master/speech.html
-
+Url:   https://cdn.rawgit.com/Avidabits/palabras/master/speech.html
+El webkit de google para google para reconocimiento de voz require https
 
 Descripción de la obra:
 La obra está concebida para su instalación en una exposición colectiva o una feria de arte.
