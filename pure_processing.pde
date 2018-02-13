@@ -9,11 +9,11 @@
 class Configura{
   Boolean depuracion=false;
   Boolean letra_menguante=true; //poner a false si va demasiado lento.
-  Boolean flourescente=false;
-  Boolean subiendo=true; // las letras pueden subir o bajar
+  Boolean flourescente=true;
+  Boolean subiendo=false; // las letras pueden subir o bajar
   color color_fondo=0; //negro
-  color color_letra=color(207, 238, 62);// verde luciernaga
-  int num_textos_minimo=8;
+  color color_letra=color(255, 234, 255);
+  int num_textos_minimo=20;
   float factor_anchura=1.0; // vamos a hacer que la amchura de la pantalla pueda ser distinta para que 
   // los textos puedan ponerse en una franja vertical y ocupar menos espacio de galeria.
   // cuando calculemos el warping del texto o el ancho de los objetos a pintar, multiplicaremos with por el factor de anchira
@@ -156,7 +156,7 @@ void draw()
   
   
    // este seno se usa para la letra pulsante del texto intermedio
-  size_letra=size_letra+sin(frameCount/6);
+  size_letra=size_letra+0.5*sin(frameCount/6);
   textFont(fuente, size_letra);
   // pintamos el texto en modo corner, ancho alto. 
   pinta_texto(texto_intermedio, X, Y, size_letra);
@@ -267,6 +267,35 @@ void drawAxis() {
 
 void creaPoesia()
 {
+  //creaPoesiaLuciernagas();
+  creaPoesiaQuevedo();
+}
+
+void creaPoesiaQuevedo()
+{
+  poesia = new ArrayList<String>();
+  poesia.add("Cerrar podrá mis ojos la postrera"); 
+  poesia.add("Sombra que me llevare el blanco día,"); 
+  poesia.add("Y podrá desatar esta alma mía ");
+  poesia.add("Hora, a su afán ansioso lisonjera;"); 
+
+  poesia.add("Mas no de esotra parte en la ribera");
+  poesia.add("Dejará la memoria, en donde ardía:");
+  poesia.add("Nadar sabe mi llama el agua fría,");
+  poesia.add("Y perder el respeto a ley severa.");
+
+  poesia.add("Alma, a quien todo un Dios prisión ha sido,"); 
+  poesia.add("Venas, que humor a tanto fuego han dado,");
+  poesia.add("Médulas, que han gloriosamente ardido,");
+
+  poesia.add("Su cuerpo dejará, no su cuidado;");
+  poesia.add("Serán ceniza, mas tendrá sentido;");
+  poesia.add("Polvo serán, mas polvo enamorado");
+  
+}
+
+void creaPoesiaLuciernagas()
+{
   poesia = new ArrayList<String>();
 
   poesia.add("luciérnagas"); //pendiente , quitar texto testing
@@ -315,4 +344,3 @@ void texto_debug(String debug)
 {
   if (configuracion.depuracion) println(debug);
 };
-
