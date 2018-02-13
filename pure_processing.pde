@@ -344,3 +344,7 @@ void texto_debug(String debug)
 {
   if (configuracion.depuracion) println(debug);
 };
+
+
+
+
